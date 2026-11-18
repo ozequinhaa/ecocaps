@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#153d2b">
+  <meta name="description" content="EcoCaps — Eco Cápsula: fertilizante experimental em cápsulas biodegradáveis feito com reaproveitamento de resíduos orgânicos.">
+  <title>EcoCaps | Eco Cápsula</title>
+  <link rel="icon" href="assets/ecocaps-banner.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Camada decorativa isolada para nunca gerar rolagem horizontal no celular -->
+  <div class="bg-decor" aria-hidden="true">
+    <div class="page-glow glow-one"></div>
+    <div class="page-glow glow-two"></div>
+  </div>
+
+  <!-- HEADER SUPERIOR (Completo no Desktop / Compacto e proporcional no Mobile) -->
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="EcoCaps, página inicial">
+      <span class="brand-mark">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 39V19M24 27C12 27 8 19 9 9c11-1 19 4 19 15M24 32c1-10 8-16 17-16 1 10-5 18-17 19"/>
+          <path d="M15 39h18"/>
+        </svg>
+      </span>
+      <span class="brand-name">Eco<span>Caps</span><small>ECO CÁPSULA</small></span>
+    </a>
+
+    <!-- Navegação tradicional visível no Desktop -->
+    <nav class="main-nav" id="mainNav" aria-label="Navegação Principal">
+      <a href="#inicio" class="nav-link active" data-section="inicio">Início</a>
+      <a href="#projeto" class="nav-link" data-section="projeto">O projeto</a>
+      <a href="#composicao" class="nav-link" data-section="composicao">Composição</a>
+      <a href="#pedido" class="nav-link" data-section="pedido">Pedir cápsulas</a>
+      <a href="#coleta" class="nav-link" data-section="coleta">Mapa &amp; Coleta</a>
+    </nav>
+
+    <!-- Ações rápidas do cabeçalho (Tema, Carrinho e Conta) -->
+    <div class="header-actions">
+      <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">☾</button>
+
+      <a href="#pedido" class="icon-btn header-cart" aria-label="Ver sacola de pedidos" title="Ver pedido">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="cart-badge" id="headerCartBadge">1</span>
+      </a>
+
+      <button class="nav-login" id="headerAuthBtn" onclick="abrirModalConta()">
+        <span id="headerAuthText">Entrar</span>
+        <i aria-hidden="true">↗</i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- SEÇÃO INÍCIO / HERO -->
+    <section class="hero" id="inicio">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> CIÊNCIA • NATUREZA • INOVAÇÃO</div>
+        <h1>Pequenas cápsulas.<br><span>Grandes transformações.</span></h1>
+        <p>Uma nova forma de olhar para os resíduos orgânicos: transformá-los em uma oportunidade de nutrir o solo e cultivar um futuro mais sustentável.</p>
+        <div class="hero-actions">
+          <a href="#pedido" class="button button-primary">Pedir EcoCaps <span>↗</span></a>
+          <a href="#coleta" class="button button-ghost">Localizar no mapa</a>
+        </div>
+        <div class="hero-proof">
+          <span class="proof-icon">♻</span>
+          <span>Reaproveitamento orgânico</span>
+          <i></i>
+          <span>Cápsulas biodegradáveis</span>
+        </div>
+      </div>
+
+      <div class="hero-art reveal">
+        <div class="hero-art-inner">
+          <div class="art-orbit orbit-a"></div>
+          <div class="art-orbit orbit-b"></div>
+          <div class="art-leaf leaf-a">✦</div>
+          <div class="art-leaf leaf-b">✦</div>
+          <div class="capsule-stage">
+            <div class="capsule-shadow"></div>
+            <div class="capsule"><span></span><i></i></div>
+            <div class="sprout"><b></b><b></b><i></i></div>
+            <div class="soil soil-back"></div>
+            <div class="soil soil-front"></div>
+          </div>
+          <div class="art-note note-top">
+            <span>01</span>
+            <div><b>Origem natural</b><small>Ingredientes reaproveitados</small></div>
+          </div>
+          <div class="art-note note-bottom">
+            <span>02</span>
+            <div><b>Formato em cápsula</b><small>Base experimental de amido</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BANNER IDENTIDADE VISUAL -->
+    <section class="banner-section wrap reveal" aria-label="Identidade visual EcoCaps">
+      <img class="project-banner" src="assets/ecocaps-banner.png" alt="Banner EcoCaps: cápsulas biodegradáveis, muda crescendo e ingredientes orgânicos reaproveitados">
+    </section>
+
+    <!-- SEÇÃO SOBRE O PROJETO -->
+    <section class="intro-section wrap section-space" id="projeto">
+      <div class="section-heading">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> SOBRE O PROJETO</span>
+        <h2>O que antes era descarte<br><span>pode ganhar um novo propósito.</span></h2>
+        <p>O EcoCaps investiga a produção de cápsulas biodegradáveis de fertilizante utilizando amido de milho e resíduos orgânicos, como cascas de banana, cascas de ovos e borra de café.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon icon-green">↻</div>
+          <span class="feature-number">01 / REAPROVEITAR</span>
+          <h3>Menos descarte</h3>
+          <p>Resíduos do cotidiano são selecionados para fazer parte de uma proposta de reaproveitamento.</p>
+        </article>
+        <article class="feature-card featured">
+          <div class="feature-icon icon-lime">♧</div>
+          <span class="feature-number">02 / DESENVOLVER</span>
+          <h3>Cápsulas biodegradáveis</h3>
+          <p>O amido de milho é estudado como base para dar forma à cápsula que envolve a mistura orgânica.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon icon-earth">⌁</div>
+          <span class="feature-number">03 / AVALIAR</span>
+          <h3>Ciência na prática</h3>
+          <p>Testes controlados ajudam a observar a decomposição e possíveis efeitos no crescimento das plantas.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SEÇÃO COMPOSIÇÃO & GRÁFICO/TABELA RESPONSIVA -->
+    <section class="composition-section section-space" id="composicao">
+      <div class="wrap">
+        <div class="section-topline">
+          <div>
+            <span class="eyebrow"><span class="eyebrow-dot"></span> INGREDIENTES</span>
+            <h2>Da cozinha para o solo.</h2>
+          </div>
+          <p>Conheça os materiais que inspiram a composição experimental do EcoCaps.</p>
+        </div>
+
+        <div class="ingredient-grid">
+          <article class="ingredient-card">
+            <div class="ingredient-emoji">🍌</div>
+            <div class="ingredient-meta">RESÍDUO ORGÂNICO</div>
+            <h3>Casca de banana</h3>
+            <p>Contém potássio e outros minerais que podem integrar a matéria orgânica do fertilizante.</p>
+            <span class="ingredient-index">01</span>
+          </article>
+          <article class="ingredient-card">
+            <div class="ingredient-emoji">🥚</div>
+            <div class="ingredient-meta">FONTE MINERAL</div>
+            <h3>Casca de ovo</h3>
+            <p>É composta principalmente por carbonato de cálcio, após limpeza e trituração adequadas.</p>
+            <span class="ingredient-index">02</span>
+          </article>
+          <article class="ingredient-card">
+            <div class="ingredient-emoji">☕</div>
+            <div class="ingredient-meta">MATÉRIA ORGÂNICA</div>
+            <h3>Borra de café</h3>
+            <p>Contribui com matéria orgânica e contém nutrientes; sua proporção deve ser testada.</p>
+            <span class="ingredient-index">03</span>
+          </article>
+          <article class="ingredient-card">
+            <div class="ingredient-emoji">🌽</div>
+            <div class="ingredient-meta">BASE DA CÁPSULA</div>
+            <h3>Amido de milho</h3>
+            <p>Material estudado para formar a estrutura da cápsula biodegradável experimental.</p>
+            <span class="ingredient-index">04</span>
+          </article>
+        </div>
+
+        <!-- Gráfico Visual Responsivo + Tabela Adaptada para Mobile -->
+        <div class="data-grid">
+          <div class="chart-card">
+            <span class="form-kicker">PROPORÇÃO EXPERIMENTAL ESTIMADA</span>
+            <h3>Equilíbrio da formulação</h3>
+            <p>Distribuição visual dos componentes estudados na mistura base.</p>
+            <div class="bar-chart" role="img" aria-label="Gráfico de barras da composição: 35% Borra de café, 30% Casca de banana, 20% Amido de milho, 15% Casca de ovo">
+              <div class="bar-row">
+                <div class="bar-info"><span>☕ Borra de café</span><strong>35%</strong></div>
+                <div class="bar-track"><div class="bar-fill" style="width: 35%"></div></div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-info"><span>🍌 Casca de banana</span><strong>30%</strong></div>
+                <div class="bar-track"><div class="bar-fill" style="width: 30%"></div></div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-info"><span>🌽 Amido de milho (invólucro)</span><strong>20%</strong></div>
+                <div class="bar-track"><div class="bar-fill" style="width: 20%"></div></div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-info"><span>🥚 Casca de ovo</span><strong>15%</strong></div>
+                <div class="bar-track"><div class="bar-fill" style="width: 15%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-card">
+            <span class="form-kicker">GUIA DE APLICAÇÃO</span>
+            <h3>Dosagem por tipo de cultivo</h3>
+            <p>Referência prática para aplicação das cápsulas no substrato.</p>
+            <div class="table-responsive">
+              <table class="eco-table">
+                <thead>
+                  <tr>
+                    <th>Cultivo</th>
+                    <th>Dosagem</th>
+                    <th>Frequência</th>
+                    <th>Profundidade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Vasos pequenos</strong></td>
+                    <td>1 cápsula</td>
+                    <td>A cada 30 dias</td>
+                    <td>3 cm no solo</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Hortaliças / Ervas</strong></td>
+                    <td>2 cápsulas</td>
+                    <td>A cada 25 dias</td>
+                    <td>4 cm perto da raiz</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Jardins e Canteiros</strong></td>
+                    <td>3 a 4 cápsulas</td>
+                    <td>A cada 45 dias</td>
+                    <td>5 cm no solo</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Mudas Frutíferas</strong></td>
+                    <td>4 cápsulas</td>
+                    <td>A cada 45 dias</td>
+                    <td>6 cm ao redor</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <p class="science-note">
+          <b>Nota científica:</b> a presença de nutrientes nos ingredientes não garante, por si só, que eles estarão disponíveis para a planta. A eficiência e a segurança da formulação precisam ser verificadas nos experimentos.
+        </p>
+      </div>
+    </section>
+
+    <!-- SEÇÃO NOSSO PROCESSO -->
+    <section class="method-section wrap section-space" id="processo">
+      <div class="section-heading centered">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> NOSSO PROCESSO</span>
+        <h2>Um ciclo de transformação.</h2>
+        <p>Etapas gerais do desenvolvimento. O procedimento final deve seguir o protocolo experimental validado pela equipe.</p>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item">
+          <span class="timeline-count">01</span>
+          <div><h3>Coleta e seleção</h3><p>Separação dos resíduos orgânicos adequados para o estudo.</p></div>
+        </article>
+        <article class="timeline-item">
+          <span class="timeline-count">02</span>
+          <div><h3>Higienização e preparo</h3><p>Limpeza, secagem e trituração dos materiais conforme o protocolo.</p></div>
+        </article>
+        <article class="timeline-item">
+          <span class="timeline-count">03</span>
+          <div><h3>Produção das cápsulas</h3><p>Preparação da mistura e modelagem da estrutura à base de amido.</p></div>
+        </article>
+        <article class="timeline-item">
+          <span class="timeline-count">04</span>
+          <div><h3>Aplicação e observação</h3><p>Realização de testes comparativos e registro dos resultados.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ÁREA DO CLIENTE PARA PEDIR O PRODUTO -->
+    <section class="order-section section-space" id="pedido">
+      <div class="wrap">
+        <div class="section-topline">
+          <div>
+            <span class="eyebrow"><span class="eyebrow-dot"></span> ÁREA DO CLIENTE • PEDIDOS</span>
+            <h2>Peça suas <span>EcoCaps.</span></h2>
+          </div>
+          <p>Escolha os kits de cápsulas biodegradáveis, informe seus dados de entrega ou retirada e finalize seu pedido direto pelo celular.</p>
+        </div>
+
+        <div class="order-layout">
+          <!-- Catálogo de Kits -->
+          <div class="products-grid" id="productsGrid">
+            <article class="product-card" data-id="kit-iniciante" data-name="Kit Iniciante (12 Cápsulas)" data-price="19.90">
+              <div class="product-top">
+                <span class="product-tag">VASOS &amp; APARTAMENTOS</span>
+                <span class="product-icon">🌱</span>
+              </div>
+              <h3>Kit Iniciante</h3>
+              <p class="product-desc">12 cápsulas biodegradáveis. Ideal para plantas ornamentais e pequenos vasos internos.</p>
+              <div class="product-footer">
+                <div class="product-price">
+                  <small>Unidade</small>
+                  <strong>R$ 19,90</strong>
+                </div>
+                <div class="qty-control">
+                  <button type="button" class="qty-btn" data-action="minus" aria-label="Diminuir quantidade">−</button>
+                  <span class="qty-value" id="qty-kit-iniciante">0</span>
+                  <button type="button" class="qty-btn" data-action="plus" aria-label="Aumentar quantidade">+</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card featured-product" data-id="kit-horta" data-name="Kit Horta & Jardim (30 Cápsulas)" data-price="42.90">
+              <div class="product-top">
+                <span class="product-tag highlight">MAIS ESCOLHIDO</span>
+                <span class="product-icon">🌿</span>
+              </div>
+              <h3>Kit Horta &amp; Jardim</h3>
+              <p class="product-desc">30 cápsulas biodegradáveis. Nutrição gradual para hortaliças, temperos e canteiros.</p>
+              <div class="product-footer">
+                <div class="product-price">
+                  <small>Pacote econômico</small>
+                  <strong>R$ 42,90</strong>
+                </div>
+                <div class="qty-control">
+                  <button type="button" class="qty-btn" data-action="minus" aria-label="Diminuir quantidade">−</button>
+                  <span class="qty-value" id="qty-kit-horta">1</span>
+                  <button type="button" class="qty-btn" data-action="plus" aria-label="Aumentar quantidade">+</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card" data-id="kit-refil" data-name="Refil Kraft (20 Cápsulas)" data-price="29.90">
+              <div class="product-top">
+                <span class="product-tag">ZERO PLÁSTICO</span>
+                <span class="product-icon">♻️</span>
+              </div>
+              <h3>Refil Kraft Compostável</h3>
+              <p class="product-desc">20 cápsulas em embalagem 100% papel kraft reciclado para reposição contínua.</p>
+              <div class="product-footer">
+                <div class="product-price">
+                  <small>Embalagem eco</small>
+                  <strong>R$ 29,90</strong>
+                </div>
+                <div class="qty-control">
+                  <button type="button" class="qty-btn" data-action="minus" aria-label="Diminuir quantidade">−</button>
+                  <span class="qty-value" id="qty-kit-refil">0</span>
+                  <button type="button" class="qty-btn" data-action="plus" aria-label="Aumentar quantidade">+</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card" data-id="kit-produtor" data-name="Kit Escolar & Comunitário (60 Cápsulas)" data-price="74.90">
+              <div class="product-top">
+                <span class="product-tag">FRETE GRÁTIS</span>
+                <span class="product-icon">🌳</span>
+              </div>
+              <h3>Kit Comunitário</h3>
+              <p class="product-desc">60 cápsulas para hortas escolares, projetos ambientais e cultivos maiores.</p>
+              <div class="product-footer">
+                <div class="product-price">
+                  <small>Melhor custo-benefício</small>
+                  <strong>R$ 74,90</strong>
+                </div>
+                <div class="qty-control">
+                  <button type="button" class="qty-btn" data-action="minus" aria-label="Diminuir quantidade">−</button>
+                  <span class="qty-value" id="qty-kit-produtor">0</span>
+                  <button type="button" class="qty-btn" data-action="plus" aria-label="Aumentar quantidade">+</button>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Resumo e Checkout do Cliente -->
+          <form class="checkout-card" id="orderForm">
+            <div class="checkout-header">
+              <div>
+                <span class="form-kicker">RESUMO DO PEDIDO</span>
+                <h3>Finalizar solicitação</h3>
+              </div>
+              <span class="order-items-count" id="orderItemsCount">1 item</span>
+            </div>
+
+            <div class="cart-list" id="cartList"></div>
+
+            <div class="cart-totals">
+              <div class="total-row"><span>Subtotal</span><span id="cartSubtotal">R$ 42,90</span></div>
+              <div class="total-row"><span>Entrega</span><span id="cartShipping">R$ 6,00</span></div>
+              <div class="total-row grand-total"><span>Total</span><strong id="cartTotal">R$ 48,90</strong></div>
+            </div>
+
+            <div class="delivery-mode">
+              <label class="mode-option">
+                <input type="radio" name="deliveryType" value="entrega" checked>
+                <span>🚚 Receber em casa</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="deliveryType" value="retirada">
+                <span>📍 Retirar no ponto</span>
+              </label>
+            </div>
+
+            <label for="orderNome">Nome do cliente</label>
+            <input type="text" id="orderNome" placeholder="Seu nome completo" required>
+
+            <label for="orderEmail">E-mail</label>
+            <input type="email" id="orderEmail" placeholder="voce@email.com" required>
+
+            <label for="orderTel">WhatsApp para contato</label>
+            <input type="tel" id="orderTel" placeholder="(31) 99999-9999" required>
+
+            <label for="orderEndereco" id="orderEnderecoLabel">Endereço ou localização do mapa</label>
+            <div class="input-with-action">
+              <input type="text" id="orderEndereco" placeholder="Rua, número, bairro ou ponto selecionado" required>
+              <a href="#coleta" class="mini-map-btn" title="Escolher no mapa">📍 Mapa</a>
+            </div>
+
+            <label for="orderPagamento">Forma de pagamento</label>
+            <select id="orderPagamento">
+              <option value="Pix">Pix (aprovação imediata)</option>
+              <option value="Cartão na entrega">Cartão na entrega / retirada</option>
+              <option value="Dinheiro">Dinheiro na entrega / retirada</option>
+            </select>
+
+            <button type="submit" class="button button-primary form-submit">
+              Confirmar pedido <span>↗</span>
+            </button>
+
+            <div class="order-feedback" id="orderFeedback" hidden></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO MAPA PARA LOCALIZAR PONTOS E COLETA -->
+    <section class="collection-section section-space" id="coleta">
+      <div class="wrap">
+        <div class="section-topline">
+          <div>
+            <span class="eyebrow"><span class="eyebrow-dot"></span> LOCALIZAÇÃO &amp; COLETA</span>
+            <h2>Encontre um ponto ou<br><span>marque sua localização.</span></h2>
+          </div>
+          <p>Use o mapa interativo para localizar pontos de retirada de EcoCaps, locais de descarte orgânico ou marcar seu endereço.</p>
+        </div>
+
+        <!-- Filtros e Botão de GPS -->
+        <div class="map-toolbar">
+          <div class="map-filters" role="group" aria-label="Filtrar pontos no mapa">
+            <button type="button" class="filter-chip active" data-filter="todos">Todos os pontos</button>
+            <button type="button" class="filter-chip" data-filter="retirada">Retirada EcoCaps</button>
+            <button type="button" class="filter-chip" data-filter="coleta">Coleta Orgânica</button>
+          </div>
+          <button type="button" class="gps-btn" id="btnMinhaLocalizacao">
+            <span>◎</span> Usar minha localização atual
+          </button>
+        </div>
+
+        <div class="map-layout">
+          <div class="map-frame">
+            <div class="map-heading">
+              <span class="map-pulse"></span>
+              <div>
+                <b>Mapa EcoCaps</b>
+                <small id="mapStatusText">Sete Lagoas • MG — Toque em um marcador ou no mapa</small>
+              </div>
+              <span class="map-label">MAPA INTERATIVO</span>
+            </div>
+            <div id="mapa" aria-label="Mapa interativo para localizar pontos ou selecionar endereço"></div>
+            <div class="map-footnote">
+              <span>Toque em qualquer lugar do mapa para marcar um ponto personalizado.</span>
+              <button type="button" class="use-in-order-btn" id="btnUsarNoPedido" disabled>Usar no meu pedido ↗</button>
+            </div>
+          </div>
+
+          <form class="collection-form" id="collectionForm">
+            <span class="form-kicker">INDICAÇÃO DE PONTO DE COLETA</span>
+            <h3>Sugerir ou agendar coleta</h3>
+            <p>Selecione um ponto no mapa e envie seus dados para coleta de resíduos ou parceria.</p>
+
+            <label for="coord">Coordenadas / Local selecionado</label>
+            <input type="text" id="coord" placeholder="Toque no mapa para selecionar" readonly required>
+
+            <label for="coletaTipo">Tipo de solicitação</label>
+            <select id="coletaTipo">
+              <option value="Descarte de resíduos orgânicos">Descarte de resíduos orgânicos</option>
+              <option value="Novo ponto de coleta parceiro">Sugerir novo ponto parceiro</option>
+              <option value="Retirada de cápsulas no local">Retirada de cápsulas no local</option>
+            </select>
+
+            <label for="coletaEmail">E-mail</label>
+            <input type="email" id="coletaEmail" placeholder="voce@email.com" required>
+
+            <label for="coletaTel">Telefone / WhatsApp</label>
+            <input type="tel" id="coletaTel" placeholder="(31) 99999-9999" required>
+
+            <button type="submit" class="button button-primary form-submit">Enviar solicitação <span>↗</span></button>
+            <small class="privacy-note">Versão demonstrativa: os registros ficam salvos localmente no seu navegador.</small>
+
+            <div class="direct-contact">
+              <span>Prefere conversar?</span>
+              <a href="https://wa.me/5531997865500" target="_blank" rel="noopener">Fale pelo WhatsApp ↗</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENCERRAMENTO -->
+    <section class="closing-section wrap">
+      <div class="closing-card">
+        <div class="closing-symbol">✳</div>
+        <span class="eyebrow">ECOCAPS • ECO CÁPSULA</span>
+        <h2>Da natureza,<br><span>para a natureza.</span></h2>
+        <p>Pequenas atitudes, novas possibilidades para um futuro mais consciente.</p>
+        <a href="#inicio" class="button button-light">Voltar ao início ↑</a>
+        <div class="closing-leaf leaf-one">✦</div>
+        <div class="closing-leaf leaf-two">✦</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="#inicio">
+      <span class="brand-mark">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 39V19M24 27C12 27 8 19 9 9c11-1 19 4 19 15M24 32c1-10 8-16 17-16 1 10-5 18-17 19"/>
+          <path d="M15 39h18"/>
+        </svg>
+      </span>
+      <span class="brand-name">Eco<span>Caps</span><small>ECO CÁPSULA</small></span>
+    </a>
+    <p>Projeto experimental de fertilizante sustentável.</p>
+    <span class="footer-copy">© 2026 EcoCaps. Desenvolvido para fins educacionais.</span>
+  </footer>
+
+  <!-- NAVEGAÇÃO MOBILE FIXA NA PARTE INFERIOR (BOTTOM NAVIGATION) -->
+  <nav class="bottom-nav" id="bottomNav" aria-label="Navegação Mobile Inferior">
+    <a href="#inicio" class="bottom-nav__item active" data-section="inicio">
+      <svg class="bottom-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span class="bottom-nav__label">Início</span>
+    </a>
+
+    <a href="#composicao" class="bottom-nav__item" data-section="composicao">
+      <svg class="bottom-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+      </svg>
+      <span class="bottom-nav__label">Cápsulas</span>
+    </a>
+
+    <a href="#pedido" class="bottom-nav__item" data-section="pedido">
+      <span class="bottom-nav__icon-wrap">
+        <svg class="bottom-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="bottom-nav__badge" id="bottomCartBadge">1</span>
+      </span>
+      <span class="bottom-nav__label">Pedir</span>
+    </a>
+
+    <a href="#coleta" class="bottom-nav__item" data-section="coleta">
+      <svg class="bottom-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      <span class="bottom-nav__label">Mapa</span>
+    </a>
+
+    <button type="button" class="bottom-nav__item" id="bottomAccountBtn" onclick="abrirModalConta()">
+      <svg class="bottom-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span class="bottom-nav__label" id="bottomAccountLabel">Entrar</span>
+    </button>
+  </nav>
+
+  <!-- MODAL DE LOGIN / CADASTRO / CONTA DO CLIENTE -->
+  <div id="authModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <div class="modal-content">
+      <button class="modal-close" onclick="fecharModal('authModal')" aria-label="Fechar janela">×</button>
+
+      <!-- VISÃO 1: LOGIN COM E-MAIL E SENHA -->
+      <div id="loginView">
+        <div class="modal-logo">🌱</div>
+        <span class="form-kicker">ACESSO DO CLIENTE</span>
+        <h2 id="authModalTitle">Entrar na EcoCaps</h2>
+        <p class="modal-description">Acesse com seu e-mail e senha para acompanhar pedidos e pontos de coleta.</p>
+
+        <form id="loginForm" class="auth-form">
+          <label for="loginEmail">E-mail</label>
+          <input id="loginEmail" type="email" placeholder="seuemail@exemplo.com" autocomplete="email" required>
+
+          <label for="loginPass">Senha</label>
+          <div class="password-field">
+            <input id="loginPass" type="password" placeholder="Mínimo 6 caracteres" autocomplete="current-password" minlength="6" required>
+            <button type="button" class="toggle-pass" data-target="loginPass" aria-label="Mostrar ou ocultar senha">👁</button>
+          </div>
+
+          <div class="auth-helpers">
+            <label class="terms-label"><input type="checkbox" id="rememberUser" checked> Manter conectado</label>
+            <button type="button" class="link-btn" id="fillDemoLogin">Preencher demo</button>
+          </div>
+
+          <p class="auth-error" id="loginError" hidden></p>
+
+          <button type="submit" class="button button-primary modal-action">Entrar com e-mail <span>↗</span></button>
+        </form>
+
+        <p class="modal-switch">
+          Ainda não tem conta? <a href="#" onclick="alternarTelaAuth('cadastro'); return false;">Criar cadastro</a>
+        </p>
+      </div>
+
+      <!-- VISÃO 2: CADASTRO COM NOME, E-MAIL E SENHA -->
+      <div id="cadastroView" hidden>
+        <div class="modal-logo">🌿</div>
+        <span class="form-kicker">NOVO CADASTRO</span>
+        <h2>Criar conta EcoCaps</h2>
+        <p class="modal-description">Cadastre seu e-mail e senha para agilizar seus pedidos de cápsulas.</p>
+
+        <form id="cadastroForm" class="auth-form">
+          <label for="cadastroNome">Nome completo</label>
+          <input id="cadastroNome" type="text" placeholder="Ex.: Maria Oliveira" autocomplete="name" required>
+
+          <label for="cadastroEmail">E-mail</label>
+          <input id="cadastroEmail" type="email" placeholder="seuemail@exemplo.com" autocomplete="email" required>
+
+          <label for="cadastroPass">Senha</label>
+          <div class="password-field">
+            <input id="cadastroPass" type="password" placeholder="Crie uma senha (mín. 6 caracteres)" autocomplete="new-password" minlength="6" required>
+            <button type="button" class="toggle-pass" data-target="cadastroPass" aria-label="Mostrar ou ocultar senha">👁</button>
+          </div>
+
+          <label for="cadastroPassConfirm">Confirmar senha</label>
+          <input id="cadastroPassConfirm" type="password" placeholder="Repita a senha" autocomplete="new-password" minlength="6" required>
+
+          <label class="terms-label">
+            <input type="checkbox" id="termos" required>
+            Aceito os termos de uso do projeto EcoCaps.
+          </label>
+
+          <p class="auth-error" id="cadastroError" hidden></p>
+
+          <button type="submit" class="button button-primary modal-action">Criar minha conta <span>↗</span></button>
+        </form>
+
+        <p class="modal-switch">
+          Já possui cadastro? <a href="#" onclick="alternarTelaAuth('login'); return false;">Fazer login</a>
+        </p>
+      </div>
+
+      <!-- VISÃO 3: PERFIL LOGADO DO CLIENTE -->
+      <div id="profileView" hidden>
+        <div class="profile-header">
+          <div class="profile-avatar" id="profileAvatar">E</div>
+          <div>
+            <span class="form-kicker">CLIENTE CONECTADO</span>
+            <h2 id="profileName">Usuário</h2>
+            <p class="profile-email" id="profileEmail">usuario@email.com</p>
+          </div>
+        </div>
+
+        <div class="profile-orders">
+          <h4>Seus pedidos recentes</h4>
+          <div id="profileOrdersList" class="profile-orders-list">
+            <p class="empty-orders">Nenhum pedido realizado ainda.</p>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <a href="#pedido" class="button button-primary modal-action" onclick="fecharModal('authModal')">Fazer novo pedido <span>↗</span></a>
+          <button type="button" class="button button-ghost modal-action logout-btn" id="btnLogout">Sair da conta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
